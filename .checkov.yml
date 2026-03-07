@@ -22,6 +22,10 @@ skip-check:
   # ECR — acceptable for demo
   - CKV_AWS_163  # ECR image scanning not enabled (using Grype in CI instead)
   - CKV_AWS_136  # ECR repository not encrypted with KMS
+  - CKV_AWS_51   # ECR image tags mutable (needed for latest tag updates in CD pipeline)
+
+  # Terraform modules — using version tags instead of commit hashes for readability
+  - CKV_TF_1     # Module sources use version tags, not commit hashes
 
   # IAM — intentional design choices
   - CKV_AWS_356  # IAM policy allows wildcard resource (eks:DescribeCluster, ecr:GetAuthorizationToken)
