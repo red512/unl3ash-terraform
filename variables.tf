@@ -11,19 +11,19 @@ variable "bucket_name" {
 variable "cluster_name" {
   type        = string
   description = "The name of the EKS cluster."
-  default     = "my-eks"
+  default     = "unl3ash-eks"
 }
 
 variable "cluster_version" {
   type        = string
   description = "The version of the EKS cluster."
-  default     = "1.23"
+  default     = "1.31"
 }
 
 variable "worker_group_instance_type" {
   type        = list(string)
   description = "The instance type of the worker group nodes. Must be large enough to support the amount of NICS assigned to pods."
-  default     = ["t3.small"]
+  default     = ["t3.medium"]
 }
 
 variable "autoscaling_group_min_size" {
@@ -35,7 +35,7 @@ variable "autoscaling_group_min_size" {
 variable "autoscaling_group_desired_capacity" {
   type        = number
   description = "The desired number of nodes the worker group should attempt to maintain."
-  default     = 2
+  default     = 1
 }
 
 variable "autoscaling_group_max_size" {
@@ -56,6 +56,12 @@ variable "iam_user_names" {
   default     = []
 }
 
+variable "existing_iam_user_names" {
+  type        = list(string)
+  description = "List of pre-existing IAM user names to add to the EKS admin group (not managed by Terraform)."
+  default     = ["ivan.k"]
+}
+
 # ------------------------------------------------------------
 # Networking Settings
 # ------------------------------------------------------------
@@ -63,13 +69,13 @@ variable "iam_user_names" {
 variable "private_subnets" {
   description = "List of private subnets CIDR blocks."
   type        = list(string)
-  default     = ["10.0.0.0/22", "10.0.32.0/22"]
+  default     = ["10.0.0.0/24", "10.0.1.0/24"]
 }
 
 variable "public_subnets" {
   description = "List of public subnets CIDR blocks."
   type        = list(string)
-  default     = ["10.0.64.0/22", "10.0.96.0/22"]
+  default     = ["10.0.2.0/24", "10.0.3.0/24"]
 }
 
 variable "azs" {

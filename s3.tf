@@ -1,5 +1,6 @@
 resource "aws_s3_bucket" "unl3ash" {
-  bucket = var.bucket_name
+  bucket        = var.bucket_name
+  force_destroy = true
 }
 
 resource "aws_s3_bucket_versioning" "unl3ash" {

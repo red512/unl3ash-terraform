@@ -12,3 +12,8 @@ output "github_actions_ecr_role_arn" {
   description = "IAM role ARN for GitHub Actions to push images to ECR via OIDC"
   value       = aws_iam_role.github_actions_ecr_push.arn
 }
+
+output "s3_bucket_name" {
+  description = "Name of the S3 bucket the unl3ash app checks files in"
+  value       = aws_s3_bucket.unl3ash.id
+}

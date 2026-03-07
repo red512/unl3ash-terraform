@@ -1,5 +1,6 @@
 module "vpc" {
-  source = "terraform-aws-modules/vpc/aws"
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "5.1.2"
 
   name = "main"
   cidr = "10.0.0.0/20"
@@ -16,13 +17,12 @@ module "vpc" {
   }
 
   enable_nat_gateway     = true
-  enable_vpn_gateway     = true
   one_nat_gateway_per_az = false
 
   enable_dns_hostnames = true
   single_nat_gateway   = true
 
   tags = {
-    Environment = "dev"
+    Environment = "dev-unl3ash"
   }
 }
