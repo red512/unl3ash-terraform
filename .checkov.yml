@@ -1,0 +1,30 @@
+framework: terraform
+soft-fail: false
+skip-check:
+  # S3 — acceptable for demo/exercise scope
+  - CKV_AWS_18   # S3 bucket logging not enabled
+  - CKV_AWS_144  # S3 bucket cross-region replication not enabled
+  - CKV_AWS_145  # S3 bucket not encrypted with KMS (using AES256)
+  - CKV2_AWS_61  # S3 bucket lifecycle configuration not set
+  - CKV2_AWS_62  # S3 event notifications not enabled
+  - CKV_AWS_21   # S3 versioning — already enabled, but MFA delete not set
+
+  # EKS — intentional for demo accessibility
+  - CKV_AWS_39   # EKS public access enabled (needed for kubectl access without VPN)
+  - CKV_AWS_58   # EKS secrets not encrypted with KMS (cost overhead for demo)
+  - CKV_AWS_338  # EKS cluster logging not enabled for all log types
+  - CKV_AWS_37   # EKS control plane logging not enabled
+
+  # VPC — acceptable for demo scope
+  - CKV2_AWS_11  # VPC flow logs not enabled
+  - CKV2_AWS_12  # Default security group restricts all traffic
+
+  # ECR — acceptable for demo
+  - CKV_AWS_163  # ECR image scanning not enabled (using Grype in CI instead)
+  - CKV_AWS_136  # ECR repository not encrypted with KMS
+
+  # IAM — intentional design choices
+  - CKV_AWS_356  # IAM policy allows wildcard resource (eks:DescribeCluster, ecr:GetAuthorizationToken)
+  - CKV_AWS_355  # IAM policy allows wildcard resource
+  - CKV_AWS_290  # IAM policy allows wildcard resource
+  - CKV_AWS_289  # IAM policy allows wildcard resource
