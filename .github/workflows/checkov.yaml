@@ -23,3 +23,21 @@ jobs:
           framework: terraform
           output_format: cli
           config_file: .checkov.yml
+
+      - name: Notify on success
+        if: success()
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{\"text\":\"✅ Checkov scan passed for ${{ github.repository }}\n<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Details>\"}" \
+            "$SLACK_WEBHOOK_URL"
+
+      - name: Notify on failure
+        if: failure()
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{\"text\":\"❌ Checkov scan failed for ${{ github.repository }}\n<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Details>\"}" \
+            "$SLACK_WEBHOOK_URL"
